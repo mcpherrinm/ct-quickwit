@@ -1,0 +1,14 @@
+version: 0.7
+
+index_id: certificate-transparency-2
+
+doc_mapping:
+  mode: strict
+  field_mappings:
+    - name: timestamp
+      type: datetime
+      input_formats:
+        - unix_timestamp
+      output_format: unix_timestamp_secs
+      fast_precision: seconds
+      fast: true
