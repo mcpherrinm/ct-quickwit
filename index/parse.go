@@ -36,21 +36,21 @@ func ParseCertificate(der []byte) (ASN1Certificate, error) {
 //	}
 func GeneralName(v asn1.RawValue) (string, string) {
 	// general unsupported version is just the tag and hex:
-	tag := fmt.Sprintf("GeneralName:%d", v.Tag)
+	tag := fmt.Sprintf("general_name:%d", v.Tag)
 	val := hex.EncodeToString(v.Bytes)
 
 	switch v.Tag {
 	case 1:
-		tag = "RFC822"
+		tag = "rfc822"
 		val = string(v.Bytes)
 	case 2:
-		tag = "DNS"
+		tag = "dns"
 		val = string(v.Bytes)
 	case 6:
-		tag = "URI"
+		tag = "uri"
 		val = string(v.Bytes)
 	case 7:
-		tag = "IPAddress"
+		tag = "ip_address"
 		val = net.IP(v.Bytes).String()
 	}
 	return tag, val

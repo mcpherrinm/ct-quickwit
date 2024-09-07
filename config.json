@@ -1,8 +1,8 @@
 {
   "CTPublicKey":   "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEVkPXfnvUcre6qVG9NpO36bWSD+pet0Wjkv3JpTyArBog7yUvuOEg96g6LgeN5uuk4n0kY59Gv5RzUo2Wrqkm/Q==",
   "CTURL":         "https://oak.ct.letsencrypt.org/2024h1",
-  "CTStart":       700040000,
-  "CTEnd":         700080000,
+  "CTStart":       700000000,
+  "CTEnd":         700001000,
   "CTContinuous":  false,
   "QuickwitURL":   "http://127.0.0.1:7280",
   "QuickwitIndex": "certificate-transparency-2",

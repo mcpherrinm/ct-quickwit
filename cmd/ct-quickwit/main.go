@@ -84,6 +84,15 @@ func main() {
 		log.Fatal("Usage: ct-quickwit <config.json>")
 	}
 
+	/*
+		f, err := os.Create("ct-quickwit.prof")
+		if err != nil {
+			log.Fatal(err)
+		}
+		pprof.StartCPUProfile(f)
+		defer pprof.StopCPUProfile()
+	*/
+
 	configFile, err := os.ReadFile(os.Args[1])
 	if err != nil {
 		log.Fatalf("Opening config file %s: %v", os.Args[1], err)

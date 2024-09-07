@@ -105,5 +105,10 @@ type ASN1AuthorityKeyIdentifier struct {
 	Id []byte `asn1:"optional,tag:0"`
 }
 
-type ASN1BasicConstraints struct {
+type ASN1DistributionPoint struct {
+	DistributionPoint ASN1DistributionPointName `asn1:"optional,tag:0"`
+}
+
+type ASN1DistributionPointName struct {
+	FullName []asn1.RawValue `asn1:"optional,tag:0"`
 }

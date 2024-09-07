@@ -174,6 +174,7 @@ func parseKeyUsage(data []byte) (ExtensionKeyUsage, error) {
 
 	var usage []string
 
+	// The order of these strings matches their index to the bit in the bitmap
 	for index, name := range []string{
 		"digital_signature",
 		"content_commitment",
@@ -200,10 +201,21 @@ func parseBasicConstraints(data []byte) (ExtensionBasicConstraints, error) {
 }
 
 func parseCRLDP(data []byte) (ExtensionCRLDP, error) {
-	// TODO
-	return ExtensionCRLDP{
-		TODO: data,
-	}, nil
+	crldps, err := unmarshalASN1[[]ASN1DistributionPoint](data)
+	if err != nil {
+		return ExtensionCRLDP{}, err
+	}
+
+	crlmap := make(map[string][]string)
+
+	for _, crldp := range crldps {
+		for _, name := range crldp.DistributionPoint.FullName {
+			tag, val := GeneralName(name)
+			crlmap[tag] = append(crlmap[tag], val)
+		}
+	}
+
+	return ExtensionCRLDP{CRLs: crlmap}, nil
 }
 
 func parsePrecertificatePoison(data []byte) (ExtensionPrecertificatePoison, error) {

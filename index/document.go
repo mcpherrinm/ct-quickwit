@@ -87,7 +87,7 @@ type ExtensionBasicConstraints struct {
 }
 
 type ExtensionCRLDP struct {
-	TODO []byte
+	CRLs map[string][]string `json:"crls,omitempty"`
 }
 
 type ExtensionPrecertificatePoison struct {
