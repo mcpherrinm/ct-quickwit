@@ -14,20 +14,20 @@ type Document struct {
 // Certificate JSON for indexing.
 // The structure mostly follows the TBSCertificate format, but simplified
 type Certificate struct {
-	Version            int                 `json:"version"`
-	Serial             string              `json:"serial"`
-	SignatureAlgorithm string              `json:"signature_algorithm"`
-	Issuer             []DistinguishedName `json:"issuer"`
-	NotBefore          int64               `json:"not_before"`
-	NotAfter           int64               `json:"not_after"`
-	Subject            []DistinguishedName `json:"subject"`
-	SPKI               SPKI                `json:"spki"`
-	IssuerUniqueID     string              `json:"issuer_unique_id,omitempty"`
-	SubjectUniqueID    string              `json:"subject_unique_id,omitempty"`
-	Extensions         []Extension         `json:"extensions,omitempty"`
+	Version            int         `json:"version"`
+	Serial             string      `json:"serial"`
+	SignatureAlgorithm string      `json:"signature_algorithm"`
+	Issuer             []TVPair    `json:"issuer"`
+	NotBefore          int64       `json:"not_before"`
+	NotAfter           int64       `json:"not_after"`
+	Subject            []TVPair    `json:"subject"`
+	SPKI               SPKI        `json:"spki"`
+	IssuerUniqueID     string      `json:"issuer_unique_id,omitempty"`
+	SubjectUniqueID    string      `json:"subject_unique_id,omitempty"`
+	Extensions         []Extension `json:"extensions,omitempty"`
 }
 
-type DistinguishedName struct {
+type TVPair struct {
 	Type  string `json:"type"`
 	Value string `json:"value"`
 }
@@ -61,8 +61,9 @@ type ExtensionSKI struct {
 	SubjectKeyIdentifier string `json:"subject_key_identifier"`
 }
 
-type ExtensionCertPolicies struct {
-	TODOCertPolicies []byte
+type ExtensionCertPolicy struct {
+	Identifier string   `json:"identifier"`
+	Qualifiers []TVPair `json:"qualifiers,omitempty"`
 }
 
 type ExtensionExtKeyUsage struct {

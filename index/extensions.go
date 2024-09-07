@@ -121,11 +121,39 @@ func parseSKI(data []byte) (ExtensionSKI, error) {
 	}, nil
 }
 
-func parseCertPolicies(data []byte) (ExtensionCertPolicies, error) {
-	// TODO
-	return ExtensionCertPolicies{
-		TODOCertPolicies: data,
-	}, nil
+func parseCertPolicies(data []byte) ([]ExtensionCertPolicy, error) {
+	policies, err := unmarshalASN1[[]ASN1PolicyInformation](data)
+	if err != nil {
+		return nil, err
+	}
+
+	var ret []ExtensionCertPolicy
+
+	for _, policy := range policies {
+		ret = append(ret, ExtensionCertPolicy{
+			Identifier: policy.PolicyIdentifier.String(),
+			Qualifiers: parsePolicyQualifiers(policy.PolicyQualifiers),
+		})
+	}
+
+	return ret, nil
+}
+
+func parsePolicyQualifiers(qualifiers []ASN1PolicyQualifierInfo) []TVPair {
+	var ret []TVPair
+	for _, qualifier := range qualifiers {
+		oid := qualifier.PolicyQualifierID.String()
+		var value string
+
+		if oid == "1.3.6.1.5.5.7.2.1" { // CPS URI
+			value = string(qualifier.Qualifier.Bytes)
+		} else {
+			value = hex.EncodeToString(qualifier.Qualifier.Bytes)
+		}
+
+		ret = append(ret, TVPair{Type: oid, Value: value})
+	}
+	return ret
 }
 
 func parseExtKeyUsage(data []byte) (ExtensionExtKeyUsage, error) {

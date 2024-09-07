@@ -112,3 +112,17 @@ type ASN1DistributionPoint struct {
 type ASN1DistributionPointName struct {
 	FullName []asn1.RawValue `asn1:"optional,tag:0"`
 }
+
+//	PolicyInformation ::= SEQUENCE {
+//	    policyIdentifier   CertPolicyId,
+//	    policyQualifiers   SEQUENCE SIZE (1..MAX) OF
+//	            PolicyQualifierInfo OPTIONAL }
+type ASN1PolicyInformation struct {
+	PolicyIdentifier asn1.ObjectIdentifier
+	PolicyQualifiers []ASN1PolicyQualifierInfo `asn1:"optional"`
+}
+
+type ASN1PolicyQualifierInfo struct {
+	PolicyQualifierID asn1.ObjectIdentifier
+	Qualifier         asn1.RawValue
+}

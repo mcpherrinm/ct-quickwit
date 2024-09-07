@@ -57,8 +57,8 @@ func GeneralName(v asn1.RawValue) (string, string) {
 }
 
 // PrepareRDNs turns a pkix.RDNSequence into
-func PrepareRDNs(seq pkix.RDNSequence) []DistinguishedName {
-	var ret []DistinguishedName
+func PrepareRDNs(seq pkix.RDNSequence) []TVPair {
+	var ret []TVPair
 	for _, set := range seq {
 		for _, dn := range set {
 			value, ok := dn.Value.(string)
@@ -66,7 +66,7 @@ func PrepareRDNs(seq pkix.RDNSequence) []DistinguishedName {
 				// TODO: The value wasn't string-ey
 				value = "<unknown>"
 			}
-			ret = append(ret, DistinguishedName{
+			ret = append(ret, TVPair{
 				Type:  dn.Type.String(),
 				Value: value,
 			})
