@@ -74,3 +74,11 @@ func PrepareRDNs(seq pkix.RDNSequence) []TVPair {
 	}
 	return ret
 }
+
+func PrepareAlgo(algo pkix.AlgorithmIdentifier) string {
+	if len(algo.Parameters.Bytes) != 0 {
+		// TODO: Better representation here
+		return algo.Algorithm.String() + ":" + hex.EncodeToString(algo.Parameters.Bytes)
+	}
+	return algo.Algorithm.String()
+}

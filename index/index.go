@@ -38,13 +38,13 @@ func PrepareDocument(logName string, index int64, der []byte, timestamp uint64, 
 		Certificate: Certificate{
 			Version:            cert.TBSCertificate.Version,
 			Serial:             cert.TBSCertificate.CertificateSerialNumber.Text(16),
-			SignatureAlgorithm: cert.TBSCertificate.SignatureAlgorithm.Algorithm.String(), // TODO: algorithm parameters
+			SignatureAlgorithm: PrepareAlgo(cert.TBSCertificate.SignatureAlgorithm),
 			Issuer:             PrepareRDNs(cert.TBSCertificate.Issuer),
 			NotBefore:          cert.TBSCertificate.Validity.NotBefore.Unix(),
 			NotAfter:           cert.TBSCertificate.Validity.NotAfter.Unix(),
 			Subject:            PrepareRDNs(cert.TBSCertificate.Subject),
 			SPKI: SPKI{
-				Algorithm: cert.TBSCertificate.SubjectPublicKeyInfo.Algorithm.Algorithm.String(), // TODO: algorithm parameters
+				Algorithm: PrepareAlgo(cert.TBSCertificate.SubjectPublicKeyInfo.Algorithm),
 				SHA256:    hex.EncodeToString(spkiHash.Sum(nil)),
 			},
 			IssuerUniqueID:  hex.EncodeToString(cert.TBSCertificate.IssuerUniqueId.Bytes),
